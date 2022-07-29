@@ -1,0 +1,7 @@
+- name: Playbook2
+  hosts: webserver1,webserver3
+  tasks:
+    - name: install the python3
+      apt:
+        name: python3
+        state: present
