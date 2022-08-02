@@ -1,0 +1,35 @@
+--- 
+- name: starting mysql
+      service:
+       name: mysql
+       state: restarted
+       force: yes
+       enabled: yes
+       sudo: yes
+    - name: create database
+      mysql_db:
+        name:  mydatabase
+        state: present
+      become_user: root
+      ignore_errors: yes
+
+    - name: create user
+      mysql_user:
+        name: admin123
+        password: admin123
+        priv: '*.*:ALL'
+        state: present
+
+    - name: install python flask dependenices
+      pip:
+           name: "{{item}}"
+           state: present
+      with_items:
+                   - flask
+                   - flask-mysql
+    - name: copy web-server code
+      copy:
+          src: app.py
+          dest: /opt/app.py
+    - name: start web-application
+      shell: FLASK_ALL=/opt/app.py nohup flask run --host=localhost
