@@ -1,5 +1,43 @@
---- 
-- name: starting mysql
+---
+- name: first project
+  hosts: localhost
+  become: yes
+  vars:
+    db_name: employee_db
+    db_user: anil
+    db_password: anil
+  tasks:
+    - name: install dependencies
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      with_items:
+        - python3
+        - python-setuptools
+        - python3-dev
+        - build-essential
+        - python3-pip
+        - python3-mysqldb
+
+    - name: install mysql database
+      apt:
+          name: "{{item}}"
+          state: present
+      with_items:
+               - mysql-server
+               - mysql-client
+    - name: starting mysql
+      service:
+       name: mysql
+yes u have to add it
+in vim and nano we can not add total 
+        name: "{{item}}"
+          state: present
+      with_items:
+               - mysql-server
+               - mysql-client
+    - name: starting mysql
       service:
        name: mysql
        state: restarted
