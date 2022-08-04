@@ -1,6 +1,21 @@
+
+IF NOT EXISTS (
+ SELECT name
+ FROM sys.databases
+ WHERE name = N'TutorialDB'
+)
+CREATE DATABASE [TutorialDB]
+GO
+ALTER DATABASE [TutorialDB] SET QUERY_STORE=ON
+GO
+
+
+
+
 -- Drop the table if it already exists
 IF OBJECT_ID('dbo.Customers', 'U') IS NOT NULL
 DROP TABLE dbo.Customers
+
 GO
 -- Create the table in the specified schema
 CREATE TABLE dbo.Customers
